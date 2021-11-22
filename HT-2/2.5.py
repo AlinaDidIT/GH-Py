@@ -10,4 +10,4 @@ for k, v in people.items():
     if v not in values:
         new_people.update({k: v})
         values.append(v)
-print(new_people)eople)
+print(new_people)
