@@ -8,19 +8,25 @@
 # -  якщо довжина менше 30 -> прiнтує суму всiх чисел та окремо
 # рядок без цифр (лише з буквами)
 # -  якщо довжина бульше 50 - > ваша фантазiя
-import re
 def nocontext():
     some_text = input('Enter some string: ')
-    len_text = len(some_text)
+    numbers = 0
+    letters = 0
+    for symbol in some_text:
+        if symbol.isdigit():
+            numsum += int(symbol)
+            numbers += 1
+    for symbol in some_text:
+        if symbol.isalpha():
+            allletters += symbol
+            letters += 1
     if 30 <= len_text <= 50:
-        print(len_text)
+        print('Length: ', len(some_text))
+        print('Numbers: ', len(numbers))
+        print('Letters: ', len(letters))
     elif len_text < 30:
-        num_list = re.findall('\d+', some_text)
-        nums = [int(item) for item in num_list]
-        total = sum(nums)
-        print(total)
-        only_text = re.sub(r"\d+",'',some_text)
-        print(only_text)
+        print('The sum of numbers: ', numsum)
+        print('String without numbers: ','.join(allletters)')
     elif len_text > 50:
         print (some_text[:len_text//2])
         print (some_text[len_text//2:])
