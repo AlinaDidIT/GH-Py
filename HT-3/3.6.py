@@ -12,6 +12,7 @@ def nocontext():
     some_text = input('Enter some string: ')
     numbers = 0
     letters = 0
+    allletters = 0
     for symbol in some_text:
         if symbol.isdigit():
             numsum += int(symbol)
