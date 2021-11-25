@@ -10,9 +10,11 @@
 # -  якщо довжина бульше 50 - > ваша фантазiя
 def nocontext():
     some_text = input('Enter some string: ')
+    len_text = len(some_text)
+    numsum = int()
+    allletters = str()
     numbers = 0
     letters = 0
-    allletters = 0
     for symbol in some_text:
         if symbol.isdigit():
             numsum += int(symbol)
