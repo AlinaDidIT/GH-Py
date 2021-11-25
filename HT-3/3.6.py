@@ -29,7 +29,7 @@ def nocontext():
         print('Letters: ', len(letters))
     elif len_text < 30:
         print('The sum of numbers: ', numsum)
-        print('String without numbers: ','.join(allletters)')
+        print('String without numbers: ', ''.join(allletters))
     elif len_text > 50:
         print (some_text[:len_text//2])
         print (some_text[len_text//2:])
