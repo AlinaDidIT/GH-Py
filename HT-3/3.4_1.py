@@ -35,3 +35,5 @@ def buy_coffee_drinks():
             payment = int(input('\nEnter the amount of money you insert: '))
             change = payment - total
             print('\nDon\'t forget to take your change: ', change, 'UAH')
+
+buy_coffee_drinks()
