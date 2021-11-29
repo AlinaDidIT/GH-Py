@@ -2,11 +2,14 @@
 # і виводить всі числа Фібоначчі, що не перевищують його.
 
 def fibonacci(i):
-    a, b = 1, 1
-    for i in range(i):
-        yield a
-        a, b = b, a + b
-    return
+    a = 0
+    b = 1
+    fibo_list=[a, b]
+    while b < i:
+        a, b=b, a+b
+        fibo_list.append(b)
+    fibo_list.pop(-1)
+    print(fibo_list)
 
 i = int(input('Enter the number: '))
-print(list(fibonacci(i)))
+fibonacci(i)
