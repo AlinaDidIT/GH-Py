@@ -12,4 +12,4 @@ def season(month):
         if month in seasons[key]:
             print(key)
     return seasons[key]
-season()
+season(month)
