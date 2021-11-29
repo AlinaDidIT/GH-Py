@@ -7,8 +7,9 @@ def season(month):
                'Spring': (3, 4, 5),
                'Summer': (6, 7, 8),
                'Autumn': (9, 10, 11)}
-    for key in seasons.keys():
-        if month in seasons[key]:
-            print(seasons[key])
-month = int(input('Enter the number of a month: '))            
+    for season, months in seasons.items():
+        if month in months:
+            print(season)
+            
+month = int(input('Enter the number of a month: '))
 season(month)
