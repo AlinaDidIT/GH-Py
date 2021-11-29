@@ -6,13 +6,13 @@
 # значення по замовчуванню < 10 > (10%). Функція повинна принтануть і
 # вернуть суму, яка буде на рахунку.
 
-def bank(a, years):
+def bank(a, years, percents = 10):
     balance = a
     for i in range(2, years+1):
         a = a
         balance += balance/100*10
         print(round(balance,2))
-percents = 10
+
 a = int(input('Enter the amount of your bank deposit: '))
 years = int(input('Enter the amount of years of your deposit: '))
 bank(a, years)
