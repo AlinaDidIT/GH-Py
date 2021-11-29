@@ -3,6 +3,7 @@
 # всередині цього діапазона.
 
 def prime_list(start, finish):
+    lst = []
     for i in range(start, finish+1):
         k = 0
         for j in range(1,i+1):
@@ -12,8 +13,7 @@ def prime_list(start, finish):
             lst.append(i)
     print(lst)
 
-
 start = int(input('Enter the begining of your range: '))
 finish = int(input('Enter the ending of your range: '))
-lst = []
+
 prime_list(start, finish)
