@@ -10,7 +10,7 @@ def bank(a, years, percents = 10):
     balance = a
     for i in range(2, years+1):
         a = a
-        balance += balance/100*10
+        balance += balance/100*percents
         print(round(balance,2))
 
 a = int(input('Enter the amount of your bank deposit: '))
