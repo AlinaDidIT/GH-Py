@@ -9,21 +9,17 @@
       # породжується виключення LoginException
 
 class LoginException(Exception):
-    def __init__(self, users):
-        self.users = users
+    pass
 
-def login(username, password, silent = False):
-    users = dict(zip(username, password))
-    for user, password in users.items():
-        try:
-            if item in users.items() and silent == False:
-                print('True')
-        except LoginException:
-            silent = True
-            print('False')
+def login(username, password, silent = 'False'):
+    users = [['Andrew', 'F984jvPHj9'], ['Eugen', 'F956jvPHj9'], ['Hanna', 'G5jm5D9p9P'], ['Olha', '8f7b8U7VrR'], ['Dmytro', 'u7L4Y85tJu']]
+    user = [username, password]
+    if silent == 'False':
+        print(any(default_user == user for default_user in users))
+    else:
+        raise LoginException("The silent mode must be swiched off, print False")
 
-username = ['Andrew', 'Eugen', 'Hanna', 'Olha', 'Dmytro']
-password = ['F984jvPHj9', 'G5jm5D9p9P', '8f7b8U7VrR', '93nE9GLc4e', 'u7L4Y85tJu']
-users = dict(zip(username, password))
-i_am_user = input('Enter your name and parol: ').split(' ')
-silent = input('Enter True or False for silent: ')
+username = input('Enter the username: ')
+password = input('Enter the password: ')
+silent = input('Enter the silent for the user: ')
+login(username, password, silent)
