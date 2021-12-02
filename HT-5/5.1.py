@@ -11,15 +11,17 @@
 class LoginException(Exception):
     pass
 
-def login(username, password, silent = 'False'):
+def login(username, password, silent = False):
     users = [['Andrew', 'F984jvPHj9'], ['Eugen', 'F956jvPHj9'], ['Hanna', 'G5jm5D9p9P'], ['Olha', '8f7b8U7VrR'], ['Dmytro', 'u7L4Y85tJu']]
     user = [username, password]
-    if silent == 'False':
-        print(any(default_user == user for default_user in users))
-    else:
-        raise LoginException("The silent mode must be swiched off, print False")
-
+    if silent == False:
+        if any(default_user == user for default_user in users) == True:
+            print(True)
+        else:        
+            raise LoginException("Not valid input")
+    else:        
+        print(False)     
 username = input('Enter the username: ')
 password = input('Enter the password: ')
-silent = input('Enter the silent for the user: ')
-login(username, password, silent)
+
+login(username, password)
