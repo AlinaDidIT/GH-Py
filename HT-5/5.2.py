@@ -16,7 +16,7 @@ def login(username, password):
     elif len(password) < 8:
         raise LoginException("The password must be more than 8 symbols")
     elif any(s.isdigit() for s in password) != True:
-        raise LoginException("The password must include at list one digit")
+        raise LoginException("The password must include at least one digit")
     else:
         print('Your login parameters are correct')
 
