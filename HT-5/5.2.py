@@ -13,11 +13,9 @@ def login(username, password):
         raise LoginException("The username must be more than 3 symbols and less than 50")
     elif username[0].isupper() != True:
         raise LoginException("The first letter of the username must be upper case")
-    else:
-        pass
-    if len(password) < 8:
+    elif len(password) < 8:
         raise LoginException("The password must be more than 8 symbols")
-    elif if any(s.isdigit() for s in password) != True:
+    elif any(s.isdigit() for s in password) != True:
         raise LoginException("The password must include at list one digit")
     else:
         print('Your login parameters are correct')
