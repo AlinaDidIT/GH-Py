@@ -23,4 +23,4 @@ def login(username, password):
 
 users = [['Chucha', 'dfjkghlskdjhg'], ['df', '45687532'], ['Dima', 'sdfgs54sdfg'], ['sunRise', 'sdjkjhjh98']]
 for user in users:
-    print('Name:', user[0], '\nPassword:', user[1], '\nStatus:', login(user[0], users[1]))
+    print('Name:', user[0], '\nPassword:', user[1], '\nStatus:', login(user[0], user[1]))
