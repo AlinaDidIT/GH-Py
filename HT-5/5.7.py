@@ -6,7 +6,7 @@
 def generator(sequence):
     while True:
         for i in sequence:
-            print(i)
+            yield(i)
 
 for elem in generator([1, 2, 3]):
     print(elem)
