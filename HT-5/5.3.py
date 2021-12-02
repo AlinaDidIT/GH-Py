@@ -5,9 +5,6 @@
   
 # Вибачте, вона працює неправильно, поки що я дуже туплю в цій темі:(((((((((
 
-class LoginException(Exception):
-    pass
-
 def login(username, password):
 
         if len(username)<3 or len(username)>50:
@@ -23,4 +20,7 @@ def login(username, password):
 
 users = [['Chucha', 'dfjkghlskdjhg'], ['df', '45687532'], ['Dima', 'sdfgs54sdfg'], ['sunRise', 'sdjkjhjh98']]
 for user in users:
-    print('Name:', user[0], '\nPassword:', user[1], '\nStatus:', login(user[0], user[1]))
+    try:
+        print('Name:', user[0], '\nPassword:', user[1], '\nStatus:', login(user[0], user[1]))
+    except LoginException as err:
+        print(err)
