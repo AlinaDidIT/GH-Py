@@ -7,20 +7,23 @@
 
 class LoginException(Exception):
     pass
+    
 
 def login(users):
     status = ''
     try:
         for user in users:
-                if len(user[0])>3 and len(user[0])<50 and len(user[1]) > 8:
-                    for s in user[0]:
-                        if s[0].isupper() == True:
-                            if any(s.isdigit() for s in user[1]) == True:
+            if len(user[0])>3 and len(user[0])<50 and len(user[1]) > 8:
+                for i in user:
+                    for s in i[0]:
+                        if s.isupper() == True:
+                            if any(l.isdigit() for l in user[1]) == True:
                                 status = 'Ok'
                                 print('Username:', user[0], '\nPassword:', user[1], '\nStatus:', status)
                                 
     except LoginException:
-        print('False')
+        status = 'False'
+        print('Username:', user[0], '\nPassword:', user[1], '\nStatus:', status)
 
 users = [['Chucha', 'dfjkghlskdjhg'], ['df', '45687532'], ['Dima', 'sdfgs54sdfg'], ['sunRise', 'sdjkjhjh98']]
 login(users)
