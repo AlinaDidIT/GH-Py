@@ -5,22 +5,22 @@
 # можна почитати документацію по ній:
 # https://docs.python.org/3/library/stdtypes.html#range
 
-def generator(stop, start=None, step=1):
+def generator(start, stop=None, step=1):
     if step == 0:
         step = 1
-    elif start != None:
-        stop,start = start,stop
+    elif stop != None:
+        start,stop = stop,start
     else:
-        start = 0
+        stop = 0
     try:
         if step > 0:
-            while start < stop:
-                yield start
-                start += step
+            while stop < start:
+                yield stop
+                stop += start
         if step < 0:
-            while start > stop:
-                yield start
-                start += step
+            while stop > start:
+                yield stop
+                stop += step
     except ValueError:
         pass
 
