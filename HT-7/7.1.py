@@ -39,7 +39,7 @@ def login(username, password):
         else:
             print('Ok')
 
-insert_card = input('Please insert your card. (Press 'c')')
+insert_card = input('Please insert your card. (Press "c")')
 take_card(insert_card)
 
 user = input('PLease, enter your USERNAME and PASSWORD with the "space" separator').split(' ')
