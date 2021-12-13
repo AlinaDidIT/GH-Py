@@ -1,3 +1,4 @@
+import json
 counter = 0
 while counter < 3:      
     username = input('Please, enter your username: ').rstrip()
