@@ -1,28 +1,57 @@
 import json
+import pprint
+import sys
+
+'''
+Username:
+- 3-25 symbols,
+- only letters
+- 1st uppercase, else lowercase
+
+Password:
+- 4 symbols
+- only digits
+
+Incasator:
+Admin1': 1111,
+Admin2': 2222
+'''
 
 counter = 0
-while counter < 3:      
+trials = 3
+while counter < 3:
     username = input('Please, enter your username: ').rstrip()
-    password = input('Enter your password (4 digits): ')
+    password = input('Please, enter your password: ')
     counter += 1
+    trials -= 1
     if counter == 3:
+        print('No trials left.')
         break
     else:
-        if len(username)<3 or len(username)>25:
+        if trials == 1:
+            print('Only', trials, 'trial left.')
+        elif username.isalpha() != True:
+            print('The username must consist of only alphabetical characters')
+            print('Only', trials, 'trials left.')
+        elif password.isdigit() != True:
+            print('The password must include only digits.')
+            print('Only', trials, 'trials left.')
+        elif len(username)<3 or len(username)>25:
             print('The username must be more than 3 and less than 25 symbols')
-            counter += 1
+            print('Only', trials, 'trials left.')
+        elif len(password) != 4:
+            print('The password must consist of 4 numbers.')
+            print('Only', trials, 'trials left.')
         elif username[0].isupper() != True:
             print('The first letter of the username must be upper case')
-            counter += 1
-        elif len(password) != 4:
-            print('The password must consist of 4 numbers')
-            counter += 1
-        elif password.isdigit() != True:
-            print('The password must include only digits')
-            counter += 1 
+            print('Only', trials, 'trials left.')
+        elif username[1:].islower() != True:
+            print('Only the first letter of the username must be upper case')
+            print('Only', trials, 'trials left.')
         else:
             break
-            
+password = int(password)
+
 class LoginException(Exception):
     pass
 
@@ -33,10 +62,16 @@ def login_menu():
     login_menu = {
                 'Authotization': 1,
                 'Registration': 2,
-                }
+                'Incasator': 3
+                 }
     return login_menu
 
-def menu1():    
+def menu1():
+
+    def incasator():
+
+        incasator_operations()
+        incasator_mode()
 
     def balance_file():
 
@@ -88,21 +123,24 @@ def menu1():
             if user_i & users_data_i == user_i:
                 print('Please, choose the operation: ')
             else:
-                print('Sorry, there is no such client.To SignUp, please, enter 'r' button or try again: ')
-
+                print('Sorry, there is no such client. I register you in a bank system.')
+                registration()
         return user
 
     menu1_switch = {
                     1: authorization,
-                    2: registration
+                    2: registration,
+                    3: incasator
                     }
 
     menu1 = login_menu()
-    print('Welcome! Choose the SignUP or LogIn operation.(To continue press any other button) : ')
+    print('Welcome! Choose the SignUP or LogIn operation: ')
     for key in menu1:
         print(key, '->', menu1[key])
     choice1 = int(input('Enter the number of your choice: '))
     output1 = menu1_switch.get(choice1)()
+
+    return
 
 def operations_menu():
 
@@ -118,14 +156,14 @@ def menu2():
 
     def view_balance():
 
-        with open(username +'_balance.data.json', 'r') as balance_f:
+        with open(username + '_balance.data.json', 'r') as balance_f:
             balance_data = json.load(balance_f)
             for k,balance in balance_data.items():
                 print('Your current', k, balance)
 
     def view_transaction_history():
 
-        with open(username +'_transactions.json', 'r') as transactions_f:
+        with open(username + '_transactions.json', 'r') as transactions_f:
             json_data = json.loads(transactions_f)
             for k, transaction in json_data.items():
                 print(k, transaction)
@@ -133,46 +171,74 @@ def menu2():
 
     def cash_payment():
 
-        cash_payment = int(input('Enter the amount of cash you want to pay: '))
-        if type(cash_payment) == int:
-            with open(username +'_balance.data.json', 'r') as balance_f:
-                balance_data = json.load(balance_f)
-                for k,balance in balance_data.items():
-                  balance += cash_payment
-                  balance_data = {'balance:': balance}
-                  with open(username +'_balance.data.json', 'w') as balance_f:
-                      balance_f.write(json.dumps(balance_data))
-                  print('Your current', k, balance)
-
-            trans_data = {username: cash_payment}
-            with open(username +'_transactions.json', 'a', encoding = 'utf-8') as transactions_f:
-                json.dump(trans_data, transactions_f, indent=2, ensure_ascii=False)
-        else:
-            raise NumberException("Not number was entered. Please, try again.")
-        return balance_data
-
-    def withdraw_money():
-
-        input_withdraw = int(input('Enter the amount of cash you want to withdraw: '))
-        with open(username +'_balance.data.json', 'r') as balance_f:
+        counter = 0
+        trials = 3
+        while counter < 3:
+            cash_payment = input('Enter the amount of cash you want to pay: ')
+            counter += 1
+            trials -= 1
+            if counter == 3:
+                print('No', trials, 'trials left. You\'ve been redirected to the main menu.' )
+                after_menu2()
+            else:
+                if trials == 1:
+                    print('Only', trials, 'trial left.')
+                elif cash_payment.isdigit() != True:
+                    print("Not number was entered. Please, try again.")
+                    print('Only', trials, 'trials left.')
+                elif int(cash_payment) <= 0:
+                    print("Got no cash. Please, try again.")
+                    print('Only', trials, 'trials left.')
+                else:
+                    break
+        cash_payment = int(cash_payment)
+        with open(username + '_balance.data.json', 'r') as balance_f:
             balance_data = json.load(balance_f)
-        if type(input_withdraw) != int:
-            raise NumberException("Not number was entered. Please, try again.")
-        elif input_withdraw > balance_data['balance:']:
-            raise NumberException("There are not enough funds in the account.")
-        else:
-            cash_withdraw = -input_withdraw
             for k,balance in balance_data.items():
-              balance += cash_withdraw
+              balance += cash_payment
               balance_data = {'balance:': balance}
               with open(username +'_balance.data.json', 'w') as balance_f:
                   balance_f.write(json.dumps(balance_data))
               print('Your current', k, balance)
 
-            trans_data = {username: cash_withdraw}
-            with open(username +'_transactions.json', 'a', encoding = 'utf-8') as transactions_f:
-                json.dump(trans_data, transactions_f, indent=2, ensure_ascii=False)
+        trans_data = {username: cash_payment}
+        with open(username + '_transactions.json', 'a', encoding = 'utf-8') as transactions_f:
+            json.dump(trans_data, transactions_f, indent=2, ensure_ascii=False)
 
+        return balance_data
+
+    def withdraw_money():
+
+        counter = 0
+        with open(username + '_balance.data.json', 'r') as balance_f:
+            balance_data = json.load(balance_f)
+
+        while counter < 3:
+            input_withdraw = input('Enter the amount of cash you want to withdraw: ')
+            counter += 1
+            if counter == 3:
+                after_menu2()
+            else:
+                if input_withdraw.isdigit() != True:
+                    print("Not number was entered. Please, try again.")
+                    counter += 1
+                elif int(input_withdraw) > balance_data['balance:']:
+                    print("Insufficient funds. Please, try again.")
+                    counter += 1
+                else:
+                    break
+
+        cash_withdraw = int(input_withdraw) * -1
+        for k,balance in balance_data.items():
+              balance += cash_withdraw
+              balance_data = {'balance:': balance}
+              with open(username + '_balance.data.json', 'w') as balance_f:
+                  balance_f.write(json.dumps(balance_data))
+              print('Your current', k, balance)
+
+        trans_data = {username: cash_withdraw}
+        with open(username + '_transactions.json', 'a', encoding = 'utf-8') as transactions_f:
+            json.dump(trans_data, transactions_f, indent=2, ensure_ascii=False)
         return balance_data
 
     menu2_switch = {
@@ -188,42 +254,91 @@ def menu2():
     choice2 = int(input('Enter the number of your choice: '))
     output2 = menu2_switch.get(choice2)()
 
+def incasator_operations():
 
-    # def withdraw_money():
-    # # видача грошей для користувачів відбувається в межах наявних купюр;
-    # # Зняття грошей з банкомату повинно відбуватись в межах наявних банкнот за наступним алгоритмом -
-    # # видається мінімальна кількість банкнот наявного номіналу. P.S. Будьте обережні з використанням
-    # # "жадібного" алгоритму (коли вибирається спочатку найбільша банкнота, а потім - наступна за розміром і т.д.) -
-    # # в деяких випадках він працює неправильно або не працює взагалі. Наприклад, якщо треба видати 160 грн.,
-    # # а в наявності є банкноти номіналом 20, 50, 100, 500,  банкомат не зможе видати суму (бо спробує
-    # # видати 100 + 50 + (невідомо), а потрібно було 100 + 20 + 20 + 20 ).
-    #
-    # def cash():
-    # # перелік купюр: 10, 20, 50, 100, 200, 500, 1000;
-    #
-    # def pay_cash():
-    #     # якщо гроші вносяться на рахунок - НЕ ТРЕБА їх розбивати і вносити в банкомат -
-    #     # не ускладнюйте собі життя, та й, наскільки я розумію, банкомати все,
-    #     # що в нього входить, відкладає в окрему касету.
-    #
-    # # у одного користувача повинні бути права "інкасатора". Відповідно і у нього буде своє власне меню із пунктами:
-    # #      - переглянути наявні купюри;
-    # #      - змінити кількість купюр;
-    # # режим як "інкассація", за допомогою якого в нього можна
-    # # "загрузити" деяку кількість банкнот (вибирається номінал і кількість)
-
-def currency():
-
-    currency = {
-                 1000: 1000, 
-                 500: 1000,
-                 200: 1000,
-                 100: 1000,
-                 50: 1000,
-                 20: 1000,
-                 10: 1000
+    incas_oper = {
+                 'View banknotes in stock': 1,
+                 'Load banknotes': 2,
                  }
-    currency = json.dumps(currency, indent=2)
-    currency_in_stock = json.loads(currency)
-    return currency, currency_in_stock
 
+    return incas_oper
+
+def incasator_mode():
+
+    def view_banknotes():
+
+        try:
+            with open('currency.json', 'r') as currency_f:
+                currency_data = json.load(currency_f)
+        except:
+            currency_data = {}
+
+        for denomination, amount in currency_data.items():
+            print('There are in stock:', amount, 'banknotes of denomination', denomination)
+        return currency_data
+
+    def load_banknotes():
+
+
+    try:
+        with open('currency.json', 'r') as currency_f:
+            currency_data = json.load(currency_f)
+    except:
+        currency_data = {}
+    denomination_amount = int(input('Enter the amount of denominations you want to load: '))
+    for i in range(denomination_amount):
+        denominat = int(input('Enter the bank note denomination: '))
+        amount = int(input('Enter the amount of bank notes: '))
+        funds = {denominat: amount}
+        funds_i = funds.items()
+        currency_data_i = currency_data.items()
+        for k,v in currency_data_i:
+            for i,j in funds_i:
+                if k == i:
+                    v = v + amount
+            new_funds = {k: v}
+            currency_data.update(new_funds)
+            with open('currency.json', 'w') as currency_f:
+                json.dump(new_funds, currency_f, indent=2, ensure_ascii=False)
+                # else:
+            #     with open('currency.json', 'a') as currency_f:
+            #         json.dump(funds, currency_f, indent=2, ensure_ascii=False)
+
+        return funds
+
+def fin_or_cont():
+
+    fin_or_cont = {
+                'Finish': 1,
+                'Back to previous menu': 2
+                  }
+    return fin_or_cont
+
+def after_menu2():
+
+    def finish():
+
+        fin = sys.exit()
+        return fin
+
+    def back_to_menu2():
+
+        menu2()
+        return menu2()
+
+
+    after_menu2_switch = {
+                  1: finish,
+                  2: back_to_menu2,
+                  }
+
+    after_menu2 = fin_or_cont()
+    for key in after_menu2:
+        print(key, '->', after_menu2[key])
+    choice3 = int(input('Enter the number of your choice: '))
+    output3 = after_menu2_switch.get(choice3)()
+    # print(output3)
+
+menu1()
+menu2()
+after_menu2()
